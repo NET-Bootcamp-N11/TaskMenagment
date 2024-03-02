@@ -1,4 +1,6 @@
 
+using TaskMenagment.Infrastructure;
+
 namespace TaskMennagment.API
 {
     public class Program
@@ -10,9 +12,11 @@ namespace TaskMennagment.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddInfrastructure(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
 
             var app = builder.Build();
 
