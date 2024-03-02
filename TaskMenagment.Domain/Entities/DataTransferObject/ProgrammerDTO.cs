@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskMenagment.Domain.Enums;
 
-namespace TaskMenagment.Domain.Entities.Model
+namespace TaskMenagment.Domain.Entities.DataTransferObject
 {
-    public class Programmer
+    public class ProgrammerDTO
     {
-        public int Id { get; set; }
-        public string ?FullName { get; set; }
-        public string ?About{ get; set; }
-        public string ?Password { get; set; }
+        public string? FullName { get; set; }
+        public string? About { get; set; }
+        public string? Password { get; set; }
         public string? Username { get; set; }
         public Field Field { get; set; }
     }
