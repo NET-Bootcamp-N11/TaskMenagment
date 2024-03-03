@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using TaskMenagment.Domain.Entities.DataTransferObject;
 using TaskMenagment.Domain.Entities.Model;
 using TaskMenagment.Domain.Enums;
 using TaskMenagment.Domain.Exeptions;
@@ -23,7 +24,7 @@ namespace TaskMenagment.Application.AuthServices
         {
             _configuration = configuration;
         }
-        public async Task<string> GenerateToken(Programmer programmer)
+        public async Task<string> GenerateToken(ProgrammerDTO programmer)
         {
             if (programmer == null)
             {
@@ -47,7 +48,6 @@ namespace TaskMenagment.Application.AuthServices
                 {
                     new Claim("Field", programmer.Field.ToString()),
                     new Claim("FullName", programmer.FullName),
-                    new Claim("ProgrammerId", programmer.Id.ToString()),
                     new Claim("CreatedDate", DateTime.UtcNow.ToString()),
                     new Claim("Permissions", permissionToJson)
                 };
@@ -83,13 +83,12 @@ namespace TaskMenagment.Application.AuthServices
                 expires: DateTime.UtcNow.AddMinutes(expires),
                 signingCredentials: credentials);
 
-
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private bool IsProgrammerExist(Programmer programmer)
+        private bool IsProgrammerExist(ProgrammerDTO programmer)
         {
-            var passw = "admin12";
+            var passw = "12";
             var username = "admin";
             if (programmer.Password == passw && programmer.Username == username) return true;
             return false;
