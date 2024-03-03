@@ -12,12 +12,12 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
 {
     public class ProgrammerService : IProgrammerService
     {
-        public Task<Programmer> Create(Programmer entity)
+        public Task<Programmer> Create(ProgrammerDTO entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Programmer> Delete(Expression<Func<Programmer, bool>> expression)
+        public Task<bool> Delete(Expression<Func<Programmer, bool>> expression)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
             throw new NotImplementedException();
         }
 
-        public Task<Programmer> Update(ProgrammerDTO entity)
+        public Task<Programmer> Update(ProgrammerDTO entity, int id)
         {
             throw new NotImplementedException();
         }

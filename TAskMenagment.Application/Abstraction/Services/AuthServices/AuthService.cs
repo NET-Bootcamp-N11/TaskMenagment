@@ -36,11 +36,11 @@ namespace TaskMenagment.Application.AuthServices
 
                 if (programmer.Field == Field.Teamlead)
                 {
-                    permissionList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+                    permissionList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
                 }
                 else
                 {
-                    permissionList = new List<int> { 9 };
+                    permissionList = new List<int> { 11 };
                 }
 
                 var permissionToJson = JsonSerializer.Serialize(permissionList);

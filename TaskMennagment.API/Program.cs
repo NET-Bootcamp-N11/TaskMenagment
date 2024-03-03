@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using TaskMenagment.Application;
 using TaskMenagment.Infrastructure;
 
 namespace TaskMennagment.API
@@ -17,6 +18,7 @@ namespace TaskMennagment.API
 
             builder.Services.AddControllers();
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddApplication();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>

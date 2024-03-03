@@ -12,10 +12,12 @@ namespace TaskMenagment.Domain.Enums
         UpdateProgrammer,
         DeleteProgrammer,
         GetProgrammerById,
+        GetProgrammers,
         CreateTask,
         UpdateTask,
         DeleteTask,
         GetTaskById,
+        GetTasks,
         ChangePassword
     }
 }
