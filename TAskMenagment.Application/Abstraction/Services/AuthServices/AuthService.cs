@@ -40,7 +40,7 @@ namespace TaskMenagment.Application.AuthServices
                 }
                 else
                 {
-                    permissionList = new List<int> { 11 };
+                    permissionList = new List<int> { 9,10,11 };
                 }
 
                 var permissionToJson = JsonSerializer.Serialize(permissionList);

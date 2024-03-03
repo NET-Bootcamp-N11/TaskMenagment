@@ -12,10 +12,10 @@ namespace TaskMenagment.Application.Abstraction
 {
     public interface ITaskService
     {
-        public Task<ProgTask> Create(ProgTask entity);
+        public Task<ProgTask> Create(ProgTaskDTO entity);
         public Task<ProgTask> GetById(int id);
-        public Task<IEnumerable<TaskViewModel>> GetAll();
-        public Task<ProgTask> Delete(Expression<Func<ProgTask, bool>> expression);
-        public Task<ProgTask> Update(ProgTaskDTO entity);
+        public Task<IEnumerable<ProgTask>> GetAll();
+        public Task<bool> Delete(Expression<Func<ProgTask, bool>> expression);
+        public Task<ProgTask> Update(ProgTaskDTO entity,int id);
     }
 }
