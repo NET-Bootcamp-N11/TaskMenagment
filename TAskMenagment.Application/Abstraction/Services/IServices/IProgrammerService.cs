@@ -14,7 +14,7 @@ namespace TaskMenagment.Application.Abstraction
     {
         public Task<Programmer> Create(ProgrammerDTO entity);
         public Task<Programmer> GetById(int id);
-        public Task<IEnumerable<ProgrammerViewModel>> GetAll();
+        public Task<IEnumerable<Programmer>> GetAll();
         public Task<bool> Delete(Expression<Func<Programmer, bool>> expression);
         public Task<Programmer> Update(ProgrammerDTO entity,int id);
     }
