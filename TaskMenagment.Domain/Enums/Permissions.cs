@@ -18,6 +18,7 @@ namespace TaskMenagment.Domain.Enums
         DeleteTask,
         GetTaskById,
         GetTasks,
+        GetProgrammerPDF,
         ChangePassword
     }
 }

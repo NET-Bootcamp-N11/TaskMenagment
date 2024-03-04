@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 using TaskMenagment.Application.Abstraction.Services.IRepositories;
 using TaskMenagment.Domain.Entities.DataTransferObject;
 using TaskMenagment.Domain.Entities.Model;
-using TaskMenagment.Domain.Entities.ViewModels;
+using QuestPDF;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using System;
+
+
 
 namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
 {
     public class ProgrammerService : IProgrammerService
     {
-        private  readonly IProgrammerRepository _repository;
+        private readonly IProgrammerRepository _repository;
 
         public ProgrammerService(IProgrammerRepository programmerRepository)
         {
@@ -51,11 +54,67 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
             return res;
         }
 
+        public async Task<string> GetPdfPath()
+        {
+
+            var text = "";
+
+            var getall = await _repository.GetAll();
+            foreach (var user in getall.ToList())
+            {
+                text = text + $"{user.Username} | {user.About}\n";
+            }
+
+            DirectoryInfo projectDirectoryInfo =
+            Directory.GetParent(Environment.CurrentDirectory).Parent.Parent;
+
+            var file = Guid.NewGuid().ToString();
+
+            string pdfsFolder = Directory.CreateDirectory(
+                 Path.Combine(projectDirectoryInfo.FullName, "pdfs")).FullName;
+
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(2, Unit.Centimetre);
+                    page.PageColor(Colors.White);
+                    page.DefaultTextStyle(x => x.FontSize(20));
+
+                    page.Header()
+                      .Text("Library Users")
+                      .SemiBold().FontSize(36).FontColor(Colors.Blue.Medium);
+
+                    page.Content()
+                      .PaddingVertical(1, Unit.Centimetre)
+                      .Column(x =>
+                      {
+                          x.Spacing(20);
+
+                          x.Item().Text(text);
+                      });
+
+                    page.Footer()
+                      .AlignCenter()
+                      .Text(x =>
+                      {
+                          x.Span("Page ");
+                          x.CurrentPageNumber();
+                      });
+                });
+            })
+            .GeneratePdf(Path.Combine(pdfsFolder, $"{file}.pdf"));
+            return Path.Combine(pdfsFolder, $"{file}.pdf");
+        }
+
         public async Task<Programmer> Update(ProgrammerDTO entity, int id)
         {
             var temp = await _repository.GetById(x => x.Id == id);
 
-            if(temp != null)
+            if (temp != null)
             {
                 temp.FullName = entity.FullName;
                 temp.About = entity.About;
@@ -66,7 +125,6 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
                 return res;
             }
             return null;
-
         }
     }
 }

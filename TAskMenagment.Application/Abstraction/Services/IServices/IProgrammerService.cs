@@ -17,5 +17,6 @@ namespace TaskMenagment.Application.Abstraction
         public Task<IEnumerable<Programmer>> GetAll();
         public Task<bool> Delete(Expression<Func<Programmer, bool>> expression);
         public Task<Programmer> Update(ProgrammerDTO entity,int id);
+        Task<string> GetPdfPath();
     }
 }
