@@ -9,6 +9,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System;
+using TaskMenagment.Domain.Entities.ViewModels;
 
 
 
@@ -22,7 +23,7 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
         {
             _repository = programmerRepository;
         }
-        public async Task<Programmer> Create(ProgrammerDTO entity)
+        public async Task<ProgrammerViewModel> Create(ProgrammerDTO entity)
         {
             var programmer = new Programmer()
             {
@@ -32,8 +33,15 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
                 Username = entity.Username,
                 Field = entity.Field,
             };
+
+            var viewModel = new ProgrammerViewModel()
+            {
+                FullName = programmer.FullName,
+                Description = programmer.About,
+                Field = programmer.Field,
+            };
             var res = await _repository.Create(programmer);
-            return res;
+            return viewModel;
         }
 
         public async Task<bool> Delete(Expression<Func<Programmer, bool>> expression)
@@ -42,16 +50,34 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
             return result;
         }
 
-        public async Task<IEnumerable<Programmer>> GetAll()
+        public async Task<List<ProgrammerViewModel>> GetAll()
         {
             var res = await _repository.GetAll();
-            return res;
+
+            List<ProgrammerViewModel> temp = new List<ProgrammerViewModel>();
+            foreach (var item in res)
+            {
+                var viewModel = new ProgrammerViewModel()
+                {
+                    FullName = item.FullName,
+                    Description = item.About,
+                    Field = item.Field,
+                };
+                temp.Add(viewModel);
+            }
+            return temp;
         }
 
-        public async Task<Programmer> GetById(int id)
+        public async Task<ProgrammerViewModel> GetById(int id)
         {
             var res = await _repository.GetById(x => x.Id == id);
-            return res;
+            var viewModel = new ProgrammerViewModel()
+            {
+                FullName = res.FullName,
+                Description = res.About,
+                Field = res.Field,
+            };
+            return viewModel;
         }
 
         public async Task<string> GetPdfPath()
@@ -110,7 +136,7 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
             return Path.Combine(pdfsFolder, $"{file}.pdf");
         }
 
-        public async Task<Programmer> Update(ProgrammerDTO entity, int id)
+        public async Task<ProgrammerViewModel> Update(ProgrammerDTO entity, int id)
         {
             var temp = await _repository.GetById(x => x.Id == id);
 
@@ -122,9 +148,18 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
                 temp.Username = entity.Username;
                 temp.Field = entity.Field;
                 var res = await _repository.Update(temp);
-                return res;
+                var viewModel = new ProgrammerViewModel()
+                {
+                    FullName = temp.FullName,
+                    Description = temp.About,
+                    Field = temp.Field,
+                };
+
+                return viewModel;
             }
             return null;
         }
+
+        
     }
 }
