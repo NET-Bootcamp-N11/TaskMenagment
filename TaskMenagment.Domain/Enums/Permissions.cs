@@ -19,6 +19,5 @@ namespace TaskMenagment.Domain.Enums
         GetTaskById,
         GetTasks,
         GetProgrammerPDF,
-        ChangePassword
     }
 }

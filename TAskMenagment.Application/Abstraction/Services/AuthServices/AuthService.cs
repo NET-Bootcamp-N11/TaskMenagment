@@ -36,11 +36,11 @@ namespace TaskMenagment.Application.AuthServices
 
                 if (programmer.Field == Field.Teamlead)
                 {
-                    permissionList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12 };
+                    permissionList = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
                 }
                 else
                 {
-                    permissionList = new List<int> { 9,10,12 };
+                    permissionList = new List<int> { 9,10};
                 }
 
                 var permissionToJson = JsonSerializer.Serialize(permissionList);
@@ -88,9 +88,9 @@ namespace TaskMenagment.Application.AuthServices
 
         private bool IsProgrammerExist(ProgrammerDTO programmer)
         {
-            var passw = "12";
-            var username = "admin";
-            if (programmer.Password == passw && programmer.Username == username) return true;
+            
+            
+            if (programmer.Password is not null && programmer.Username is not null) return true;
             return false;
         }
     }

@@ -88,7 +88,7 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
             var getall = await _repository.GetAll();
             foreach (var user in getall.ToList())
             {
-                text = text + $"{user.Username} | {user.About}\n";
+                text = text + $"{user.Id} | {user.FullName} | {user.About}\n";
             }
 
             DirectoryInfo projectDirectoryInfo =
@@ -111,7 +111,7 @@ namespace TaskMenagment.Application.Abstraction.Services.ProgrammerServices
                     page.DefaultTextStyle(x => x.FontSize(20));
 
                     page.Header()
-                      .Text("Library Users")
+                      .Text("All Programmers")
                       .SemiBold().FontSize(36).FontColor(Colors.Blue.Medium);
 
                     page.Content()
